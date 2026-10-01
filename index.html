@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karel Nathanael Tanoe | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F6; --ink:#14213D; --muted:#4F5B73; --line:#C9D1DF;
+  --blue:#2B4EFF; --sun:#FFC93C; --card:#FFFFFF;
+  --display:'Bricolage Grotesque','Segoe UI',sans-serif;
+  --body:'DM Sans','Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 1.05rem/1.7 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+
+/* top bar */
+.topbar{height:64px;background:var(--card);border-bottom:2px solid var(--ink)}
+
+/* hero */
+.hero{padding:88px 0 64px}
+.hero h1{font:800 clamp(2.6rem,8vw,5.6rem)/1.02 var(--display);letter-spacing:-.03em;max-width:16ch}
+.hero h1 span{background:linear-gradient(transparent 62%,var(--sun) 62%)}
+.hero p+p{margin-top:14px}
+.hero p{max-width:60ch;margin-top:26px;color:var(--muted);font-size:1.15rem}
+
+/* project list */
+.projects{padding-bottom:96px}
+.projects h2{font:800 1.6rem var(--display);margin-bottom:22px}
+.projects h2.second{margin-top:48px}
+.proj{display:grid;grid-template-columns:1.1fr 1fr;gap:0;background:var(--card);border:2px solid var(--ink);border-radius:18px;overflow:hidden;margin-bottom:26px;position:relative}
+.proj .txt{padding:34px}
+.proj h3{font:800 1.7rem/1.15 var(--display);margin-bottom:12px}
+.proj p{color:var(--muted)}
+.more{grid-column:1/-1;display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.more>div{overflow:hidden}
+.proj.open .more{grid-template-rows:1fr}
+.more .body{border-top:2px solid var(--ink);padding:26px 34px 92px}
+.more p{margin-top:0}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.shots.mixed{grid-template-columns:repeat(3,1fr)}
+.shots.mixed img{aspect-ratio:3/4;object-fit:cover}
+.shots.mixed img.wide{grid-column:1/-1;aspect-ratio:16/9;object-position:50% 75%}
+.shots.paper{grid-template-columns:1fr 1fr;align-items:start}
+.shots.paper img:first-child{grid-row:1/3}
+.shots.pair img{aspect-ratio:16/9;object-fit:cover}
+.shots.pair img:first-child{object-position:50% 70%}
+.shots.grid4 img{aspect-ratio:2/1;object-fit:cover;object-position:50% 0}
+.shots img{width:100%;height:auto;display:block;border:2px solid var(--ink);border-radius:12px;background:var(--card)}
+.more p+p{margin-top:12px}
+.proj .go{display:inline-block;margin-top:16px;font-weight:500;color:var(--blue)}
+.toggle{position:absolute;right:18px;bottom:18px;width:48px;height:48px;border-radius:50%;border:2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:background .2s}
+.toggle:hover{background:var(--sun)}
+.toggle svg{transition:transform .3s}
+.proj.open .toggle svg{transform:rotate(180deg)}
+.proj .art{min-height:240px;display:grid;place-items:center;font:800 clamp(2.2rem,6vw,3.6rem) var(--display);color:var(--ink)}
+.proj.a .art{background:var(--sun)}
+.proj.b .art{background:var(--blue);color:#fff}
+.proj.d .art{background:#7BD9A6;color:var(--ink)}
+.proj.e .art{background:#FF7A66;color:var(--ink)}
+.proj.c .art{background:var(--ink);color:var(--sun)}
+
+/* detail pages */
+.page{display:none}
+.page.show{display:block}
+.back{display:inline-block;margin:36px 0 0;font-weight:500;text-decoration:none;color:var(--blue)}
+.back:hover{text-decoration:underline}
+.detail-head{padding:28px 0 40px}
+.detail-head h1{font:800 clamp(2.2rem,6vw,4.2rem)/1.05 var(--display);letter-spacing:-.025em;max-width:16ch}
+.facts{display:flex;flex-wrap:wrap;gap:12px 36px;margin-top:28px;padding-top:20px;border-top:2px solid var(--ink)}
+.facts div{min-width:140px}
+.facts b{display:block;font:500 .85rem var(--body);color:var(--muted)}
+.lead{font-size:1.25rem;max-width:60ch;margin-bottom:48px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:56px}
+.cols h2,.gallery-title{font:800 1.5rem var(--display);margin-bottom:14px}
+.cols p+p{margin-top:14px}
+.cols ul{list-style:none}
+.cols li{padding:12px 0 12px 22px;border-bottom:1px solid var(--line);position:relative}
+.cols li::before{content:"";position:absolute;left:0;top:1.3em;width:9px;height:9px;background:var(--blue);border-radius:50%}
+.a-page .cols li::before{background:var(--sun);border:2px solid var(--ink);width:11px;height:11px}
+.gallery{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-bottom:96px}
+.photo{border-radius:14px;overflow:hidden;border:2px dashed var(--muted);min-height:200px;display:grid;place-items:center;text-align:center;padding:16px;color:var(--muted);font-size:.9rem;background:rgba(255,255,255,.5)}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo.has{border:0;padding:0}
+.g1{grid-column:span 4;min-height:300px}
+.g2{grid-column:span 2}
+.g3{grid-column:span 2}
+.g4{grid-column:span 4}
+
+/* contact */
+.contact{background:var(--ink);color:#fff;padding:56px 0}
+.contact h2{font:800 1.6rem var(--display);margin-bottom:22px}
+.contact ul{list-style:none;display:flex;flex-wrap:wrap;gap:14px}
+.contact a{display:flex;align-items:center;gap:12px;padding:12px 22px 12px 16px;border:2px solid #fff;border-radius:999px;text-decoration:none;font-weight:500;overflow-wrap:anywhere;transition:background .2s,color .2s,border-color .2s}
+.contact a:hover{background:var(--sun);color:var(--ink);border-color:var(--sun)}
+.contact a:focus-visible{outline-color:var(--sun)}
+.contact svg{width:24px;height:24px;flex:none}
+.gallery.even{grid-template-columns:1fr 1fr}
+.gallery.even>*{grid-column:span 1;min-height:0}
+.gallery.even .photo.has{border:2px solid var(--ink);align-self:start;background:var(--card)}
+.gallery.even .photo img{height:auto}
+
+footer{border-top:2px solid var(--ink);padding:26px 0 40px;color:var(--muted);font-size:.95rem}
+
+@media(max-width:760px){
+  .proj{grid-template-columns:1fr}
+  .proj .art{min-height:140px;order:-1}
+  .cols{grid-template-columns:1fr;gap:32px}
+  .gallery>*{grid-column:span 6!important;min-height:200px}
+  .gallery.even{grid-template-columns:1fr}
+  .gallery.even>*{grid-column:span 1!important}
+  .proj:not(.open) .txt{padding-bottom:96px}
+  .more .body{padding:22px 22px 84px}
+  .shots,.shots.mixed,.shots.paper,.shots.pair{grid-template-columns:1fr}
+  .shots.paper img:first-child{grid-row:auto}
+  .hero{padding-top:56px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="topbar" aria-hidden="true"></header>
+
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section class="page show" id="home">
+  <div class="wrap">
+    <div class="hero">
+      <h1>Hi, I'm <span>Karel Nathanael Tanoe</span>.</h1>
+      <p>I'm a fifth-semester Computer Science undergraduate student at BINUS University majoring in Computer Science in the Intelligence Systems (AI) streaming, passionate about building technology that solves real-world problems.</p>
+      <p>Experienced in AI, web development, and UI/UX through university and self-initiated projects. I enjoy collaborating with others and connecting with new people.</p>
+    </div>
+    <div class="projects">
+      <h2>Activities</h2>
+      <div class="proj a">
+        <div class="txt">
+          <h3>Freshmen Leader 2026</h3>
+        </div>
+        <div class="art" aria-hidden="true">FL</div>
+        <div class="more" id="d-fl"><div inert><div class="body">
+            <p>Together with five fellow Freshmen Leaders, we led a group of new students through their orientation week at BINUS@Alam Sutera. My job was to keep them on track, keep them supported, and help a new campus feel like a place they belong.</p>
+            <div class="shots mixed"><img class="wide" src="images/freshmen-2.jpg" alt="A large group of freshmen posing together outside in front of palm trees" loading="lazy"><img src="images/freshmen-1.jpg" alt="Freshmen Leaders and friends posing with playful hand gestures outside the campus" loading="lazy"><img src="images/freshmen-3.jpg" alt="Selfie with a classroom full of freshmen smiling and making peace signs" loading="lazy"><img src="images/freshmen-4.jpg" alt="Team photo of students in blue and purple shirts striking a pose together" loading="lazy"></div>
+          </div></div></div>
+        <button class="toggle" type="button" aria-expanded="false" aria-controls="d-fl" aria-label="Show description of Freshmen Leader 2026"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v14M4 11l6 6 6-6"/></svg></button>
+      </div>
+      <div class="proj d">
+        <div class="txt">
+          <h3>Teaching Children at an Orphanage About Dietary Guidelines and Nutritional Intake for a Healthy Life, Yayasan Sosial Tangan Kasih 2024</h3>
+        </div>
+        <div class="art" aria-hidden="true">TK</div>
+        <div class="more" id="d-ys"><div inert><div class="body">
+            <p>With six fellow classmates, we visited Yayasan Sosial Tangan Kasih to teach the children about dietary guidelines and the nutritional intake needed for a healthy life. We played games together to keep the lesson fun and easy to remember. We also brought nutritious food for the children, and taught them which foods are better for their bodies in the long run.</p>
+            <p>Because we were teaching about health, we wanted to be sure that everything we said was correct and valid. We contacted Dr. Yusack Yulian Andredharma and set up a Zoom meeting to interview him. Talking with him helped us understand and validate what a nutritious diet really is, so the information we shared with the children was reliable.</p>
+            <div class="shots pair"><img src="images/orphanage-1.jpg" alt="Our group in maroon jackets sitting with the children at Yayasan Sosial Tangan Kasih, posing together" loading="lazy"><img src="images/orphanage-2.jpg" alt="Zoom interview with Dr. Yusack, with three of our team members on the call" loading="lazy"></div>
+          </div></div></div>
+        <button class="toggle" type="button" aria-expanded="false" aria-controls="d-ys" aria-label="Show description of the Yayasan Sosial Tangan Kasih nutrition activity"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v14M4 11l6 6 6-6"/></svg></button>
+      </div>
+      <h2 class="second">Projects</h2>
+      <div class="proj b">
+        <div class="txt">
+          <h3>Collaboration Website: Collabra 2026</h3>
+        </div>
+        <div class="art" aria-hidden="true">Collabra</div>
+        <div class="more" id="d-cb"><div inert><div class="body">
+            <p>With two classmates, we built Collabra, a website for collaborative work. Its main idea is that a person's role belongs to the project, not to the account. The same user can be a team member in one project and the project manager in another.</p>
+            <p>This website does not only excel at separating roles, Collabra also allows each account to have more than one project, have their own progress bar, can track each task for each individual project and more.</p>
+            <p>Behind this, every project stores its own list of members and their roles. Whoever creates a project becomes its project manager, and others join as team members, either by entering the project's invite code or by being added by the manager. Inside a project, tasks have a status, a deadline and an assignee, and can be viewed on a Kanban board. Team members can update their task progress, leave comments on tasks and attach files, while the project manager can edit the project details, manage the team and mark the project as finished.</p>
+            <p>Collabra also has a dashboard, a project list that can be filtered by status (all, active, completed and archived), profile settings, and a light and dark mode. On the technical side, the frontend is built with HTML, CSS and JavaScript, and the backend uses FastAPI with a PostgreSQL database, secure login with hashed passwords and tokens, and Docker for running it. Before building, we also prepared a Software Requirements Specification (SRS) document and a Figma design for the interface.</p>
+            <div class="shots"><img src="images/collabra-1.png" alt="Collabra landing page with the headline Project management, simplified" loading="lazy"><img src="images/collabra-2.png" alt="Collabra project portfolio page showing a project and the user's role as Project Manager" loading="lazy"><img src="images/collabra-3.png" alt="Collabra project overview with completion, tasks, deadline, team and progress timeline" loading="lazy"><img src="images/collabra-4.png" alt="Collabra page for changing project details, deadline and the user's role" loading="lazy"></div>
+          </div></div></div>
+        <button class="toggle" type="button" aria-expanded="false" aria-controls="d-cb" aria-label="Show description of Collaboration Website: Collabra 2026"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v14M4 11l6 6 6-6"/></svg></button>
+      </div>
+      <div class="proj e">
+        <div class="txt">
+          <h3>Bank Fraud Detection System: BankGuard 2026</h3>
+        </div>
+        <div class="art" aria-hidden="true">BankGuard</div>
+        <div class="more" id="d-bg"><div inert><div class="body">
+            <p>With three fellow classmates, we built BankGuard, a machine learning-based mobile banking fraud detection system using Random Forest. A user enters the details of a transaction, such as its type, the amount, and the balance before and after, and BankGuard analyzes whether the transaction looks safe or suspicious.</p>
+            <p>The Random Forest model was trained on a dataset of more than 1.7 million transactions. Instead of looking only at the raw numbers, we engineered features such as the ratio of the amount to the account balance, whether the balances add up correctly after the transaction, and each user's recent spending pattern, using rolling averages and deviations over their last 6, 12 and 24 transactions.</p>
+            <p>Behind the interface, a Flask backend with a MongoDB database handles registration, login and fraud checks. When a new user signs up, they enter their usual minimum and maximum transaction amounts, and the system creates a baseline of 30 normal transactions so the model has a history to compare against. Every checked transaction is saved with its prediction. The result page then shows whether fraud was detected, along with a risk score, a confidence level and a pattern match.</p>
+            <div class="shots grid4"><img src="images/bankguard-1.png" alt="BankGuard login page with email and password fields" loading="lazy"><img src="images/bankguard-2.png" alt="BankGuard create account page, including the user's average minimum and maximum transaction amounts" loading="lazy"><img src="images/bankguard-3.png" alt="BankGuard transaction page where the user enters the type, amount and balances to validate" loading="lazy"><img src="images/bankguard-4.png" alt="BankGuard result page showing No Fraud Detected with a risk score, confidence and pattern match" loading="lazy"></div>
+          </div></div></div>
+        <button class="toggle" type="button" aria-expanded="false" aria-controls="d-bg" aria-label="Show description of Bank Fraud Detection System: BankGuard 2026"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v14M4 11l6 6 6-6"/></svg></button>
+      </div>
+      <h2 class="second">Research</h2>
+      <div class="proj c">
+        <div class="txt">
+          <h3>Comparative Analysis of LSTM and XGBoost for Short-Term Energy Consumption Forecasting in Smart Buildings Paper 2026</h3>
+        </div>
+        <div class="art" aria-hidden="true">AI</div>
+        <div class="more" id="d-pp"><div inert><div class="body">
+            <p>Together with a friend, we submitted a paper comparing the performance of LSTM and XGBoost for short-term energy consumption forecasting in smart buildings. Our goal was to find out which of the two is better at discerning patterns in time-based data. LSTM is usually considered the better choice and tends to dominate time-based tasks, while XGBoost is often left behind.</p>
+            <p>The results turned out differently than expected. When both models were given raw data, LSTM performed better. But when XGBoost was supplied with domain-specific temporal feature engineering, it became competitive with LSTM and came out ahead. In other words, XGBoost is competitive only when it is given that kind of feature engineering.</p>
+            <div class="shots paper"><img src="images/paper-1.png" alt="CU-BEMS energy forecasting results: LSTM and XGBoost training curves, a forecast over the first 500 test points, and actual versus predicted scatter plots" loading="lazy"><img src="images/paper-2.png" alt="Bar charts comparing LSTM, XGBoost and a naive baseline on the test set for RMSE, MAE, R2, SMAPE and NRMSE" loading="lazy"><img src="images/paper-3.png" alt="Bar charts of 3-fold time series cross-validation results for LSTM and XGBoost across the same five metrics" loading="lazy"><img src="images/paper-4.png" alt="XGBoost top 20 feature importances bar chart, led by hour cosine, hour sine and rolling standard deviation features" loading="lazy"><img src="images/paper-5.png" alt="Residual analysis for LSTM and XGBoost showing residuals over time and residual distributions" loading="lazy"></div>
+          </div></div></div>
+        <button class="toggle" type="button" aria-expanded="false" aria-controls="d-pp" aria-label="Show description of the LSTM and XGBoost paper"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v14M4 11l6 6 6-6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE 1: FRESHMEN LEADER ============ -->
+<section class="page a-page" id="freshmen">
+  <div class="wrap">
+    <a class="back" href="#home">Back to home</a>
+    <div class="detail-head">
+      <h1>Freshmen Leader 2026</h1>
+      <div class="facts">
+        <div><b>Where</b>BINUS@Alam Sutera</div>
+        <div><b>When</b>Orientation week, 2026</div>
+        <div><b>Team</b>6 Freshmen Leaders (me + 5)</div>
+        <div><b>Role</b>Freshmen Leader</div>
+      </div>
+    </div>
+
+    <p class="lead">Together with five fellow Freshmen Leaders, we led a group of new students through their orientation week at BINUS@Alam Sutera. My job was to keep them on track, keep them supported, and help a new campus feel like a place they belong.</p>
+
+    <div class="cols">
+      <div>
+        <h2>What I did</h2>
+        <ul>
+          <li>Led and guided a group of freshmen through every day of orientation week.</li>
+          <li>Tracked each student's orientation assignments and reminded them of deadlines.</li>
+          <li>Helped freshmen adapt to campus, from finding their way around to meeting new friends.</li>
+          <li>Coordinated with the other five leaders so every group got the same clear information.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Why it mattered</h2>
+        <p>The first week at university can feel overwhelming. New students face a new place, new people and a lot of tasks at once. By checking in with them, answering questions and staying organised, we made that week easier and more welcoming.</p>
+        <p>The role taught me how to lead by listening, how to stay reliable under pressure, and how to work as one team with other leaders toward a shared goal.</p>
+      </div>
+    </div>
+
+    <h2 class="gallery-title">Photos</h2>
+    <!-- HOW TO ADD PHOTOS: put your images in an "images" folder next to this file,
+         then replace each <div class="photo">...</div> with:
+         <div class="photo has"><img src="images/your-photo.jpg" alt="Describe the photo"></div> -->
+    <div class="gallery">
+      <div class="photo g1">Photo 1: add a group photo here</div>
+      <div class="photo g2">Photo 2</div>
+      <div class="photo g3">Photo 3</div>
+      <div class="photo g4">Photo 4</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE 2: COLLABRA ============ -->
+<section class="page b-page" id="collabra">
+  <div class="wrap">
+    <a class="back" href="#home">Back to home</a>
+    <div class="detail-head">
+      <h1>Collaboration Website: Collabra 2026</h1>
+      <div class="facts">
+        <div><b>Type</b>Team web project</div>
+        <div><b>Year</b>2026</div>
+        <div><b>Team</b>3 members (me + 2 classmates)</div>
+        <div><b>Product</b>Collabra</div>
+      </div>
+    </div>
+
+    <p class="lead">With two classmates, we built Collabra, a website for collaborative work. Its main idea is that a person's role belongs to the project, not to the account. The same user can be a team member in one project and the project manager in another.<br><br>This website does not only excel at separating roles, Collabra also allows each account to have more than one project, have their own progress bar, can track each task for each individual project and more.<br><br>Behind this, every project stores its own list of members and their roles. Whoever creates a project becomes its project manager, and others join as team members, either by entering the project's invite code or by being added by the manager. Inside a project, tasks have a status, a deadline and an assignee, and can be viewed on a Kanban board. Team members can update their task progress, leave comments on tasks and attach files, while the project manager can edit the project details, manage the team and mark the project as finished.<br><br>Collabra also has a dashboard, a project list that can be filtered by status (all, active, completed and archived), profile settings, and a light and dark mode. On the technical side, the frontend is built with HTML, CSS and JavaScript, and the backend uses FastAPI with a PostgreSQL database, secure login with hashed passwords and tokens, and Docker for running it. Before building, we also prepared a Software Requirements Specification (SRS) document and a Figma design for the interface.</p>
+
+    <div class="cols">
+      <div>
+        <h2>What Collabra does</h2>
+        <ul>
+          <li><strong>Roles per project.</strong> Users are assigned a role inside each project, so one account can hold different roles in different places.</li>
+          <li><strong>Progress tracking.</strong> Teams can see how far a project has come and what is still left to do.</li>
+          <li><strong>Project deadlines.</strong> Each project has its own deadlines, so everyone knows what is due and when.</li>
+          <li><strong>And more.</strong> Extra features that keep teamwork organised in one place.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>The idea behind it</h2>
+        <p>Many tools give each account one fixed role, which does not match real life. A student might lead one group project and be a regular contributor in another. Collabra was designed around that reality.</p>
+        <p>Working in a team of three, we planned the features together, split the work and put the pieces together into one website. It taught me how to collaborate on a shared build, communicate clearly and keep a project moving toward a deadline.</p>
+      </div>
+    </div>
+
+    <h2 class="gallery-title">Screenshots</h2>
+    <div class="gallery even">
+      <div class="photo has"><img src="images/collabra-1.png" alt="Collabra landing page with the headline Project management, simplified" loading="lazy"></div>
+      <div class="photo has"><img src="images/collabra-2.png" alt="Collabra project portfolio page showing a project and the user's role as Project Manager" loading="lazy"></div>
+      <div class="photo has"><img src="images/collabra-3.png" alt="Collabra project overview with completion, tasks, deadline, team and progress timeline" loading="lazy"></div>
+      <div class="photo has"><img src="images/collabra-4.png" alt="Collabra page for changing project details, deadline and the user's role" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Contact me</h2>
+    <ul>
+      <li><a href="https://wa.me/6287808942600" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        +6287808942600</a></li>
+      <li><a href="mailto:karel.tanoe@binus.ac.id">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        karel.tanoe@binus.ac.id</a></li>
+      <li><a href="https://www.linkedin.com/in/karel-nathanael-tanoe-679738264/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn: Karel Nathanael Tanoe</a></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">&copy; 2026 Karel Nathanael Tanoe. BINUS@Alam Sutera.</div>
+</footer>
+
+<script>
+(function(){
+  var pages=['home','freshmen','collabra'];
+  var titles={home:'Karel Nathanael Tanoe | Portfolio',freshmen:'Freshmen Leader 2026 | Karel Nathanael Tanoe',collabra:'Collabra 2026 | Karel Nathanael Tanoe'};
+  function show(){
+    var id=location.hash.replace('#','');
+    if(pages.indexOf(id)<0)id='home';
+    pages.forEach(function(p){document.getElementById(p).classList.toggle('show',p===id)});
+    document.title=titles[id];
+    window.scrollTo(0,0);
+  }
+  document.querySelectorAll('.toggle').forEach(function(b){
+    b.addEventListener('click',function(){
+      var card=b.closest('.proj'),open=!card.classList.contains('open');
+      card.classList.toggle('open',open);
+      b.setAttribute('aria-expanded',open);
+      card.querySelectorAll('.more>div').forEach(function(d){d.inert=!open});
+    });
+  });
+  window.addEventListener('hashchange',show);
+  show();
+})();
+</script>
+</body>
+</html>
